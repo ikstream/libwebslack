@@ -20,15 +20,15 @@
 #define _LIBWEBSLACK_H_
 
 #define MAX_HOOK_LENGTH 512
-#define MAX_CHANNEL_LENGTH 24
+#define MAX_CHANNEL_LENGTH 22
 #define MAX_USER_LENGTH 21
 #define MAX_TEXT_LENGTH 1024
 
 struct team_info {
-	char webhook_url[MAX_HOOK_LENGTH];
-	char channel[MAX_CHANNEL_LENGTH];
-	char username[21];
-	char text[1024];
+	char webhook_url[MAX_HOOK_LENGTH + 1];
+	char channel[MAX_CHANNEL_LENGTH + 1];
+	char username[MAX_USER_LENGTH + 1];
+	char text[MAX_TEXT_LENGTH + 1];
 };
 
 /*
@@ -37,7 +37,7 @@ struct team_info {
  * @webhook_url: webhook url of your team to use
  * return 0 on success, else 1
  */
-int set_webhook_url(struct team_info team_info, char *webhook_url);
+int set_webhook_url(struct team_info *team_info, char *webhook_url);
 
 /*
  * set channel to post to
@@ -46,7 +46,7 @@ int set_webhook_url(struct team_info team_info, char *webhook_url);
  * @channel: channel to post to
  * return 0 on success, else 1
  */
-int set_channel(struct team_info team_info, char *channel);
+int set_channel(struct team_info *team_info, char *channel);
 
 /*
  * set the user name for a team struct
@@ -56,7 +56,7 @@ int set_channel(struct team_info team_info, char *channel);
  * @username: username to set
  * return 0 on success, else 1
  */
-int set_username(struct team_info team_info, char *username);
+int set_username(struct team_info *team_info, char *username);
 
 /*
  * send message to team
@@ -64,7 +64,7 @@ int set_username(struct team_info team_info, char *username);
  * @text: send this text
  * return ???? TODO
  */
-int send_message(struct team_info team_info, char *text);
+int send_message(struct team_info *team_info, char *text);
 
 #endif
 
