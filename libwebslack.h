@@ -64,7 +64,7 @@ int set_username(struct team_info *team_info, const char *username);
  * set message to send
  * @param team_info: team to send to
  * @param text: send this text
- * return ???? TODO
+ * return 0 on success, else 1
  */
 int set_message(struct team_info *team_info, const char *text);
 
@@ -72,6 +72,7 @@ int set_message(struct team_info *team_info, const char *text);
  * Set emoji icon
  * @param team_info: team struct
  * @param emoji: emoji name
+ * return 0 on success, else 1
  */
 int set_emoji(struct team_info *team_info, const char *emoji);
 
@@ -82,5 +83,5 @@ int set_emoji(struct team_info *team_info, const char *emoji);
  */
 int send_message(struct team_info *team_info);
 
-#endif
+#endif /*_LIBWEBSLACK_H_ */
 
