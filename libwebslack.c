@@ -36,10 +36,10 @@ int send_message(struct team_info *ti) {
 	CURL *curl;
 	CURLcode res;
 	int ret;
-	uint8_t channel_len = sizeof(char) * CHANNEL + strlen(ti->channel) + TERM_CHAR;
-	uint8_t user_len = sizeof(char) * USERNAME + strlen(ti->username) + TERM_CHAR;
-	uint16_t text_len = sizeof(char) * TEXT + strlen(ti->text) + TERM_CHAR;
-	uint8_t emoji_len = sizeof(char) * ICON_EMOJI + strlen(ti->emoji) + TERM_CHAR;
+	uint8_t channel_len = sizeof(char) * CHANNEL + strlen(ti->channel);
+	uint8_t user_len = sizeof(char) * USERNAME + strlen(ti->username);
+	uint16_t text_len = sizeof(char) * TEXT + strlen(ti->text);
+	uint8_t emoji_len = sizeof(char) * ICON_EMOJI + strlen(ti->emoji);
 	uint32_t final_len = channel_len + user_len + text_len + emoji_len +
 		sizeof(char) * (JSON_SYMBOLS + PAYLOAD_SYMBOLS + TERM_CHAR);
 	char *str = malloc(final_len);
@@ -47,9 +47,12 @@ int send_message(struct team_info *ti) {
 	ret = snprintf(str, final_len, "payload={\"channel\": \"%s\", \"username\":"
 		 " \"%s\", \"text\": \"%s\", \"icon_emoji\": \"%s\"}\"",
 		 ti->channel,ti->username, ti->text, ti->emoji);
-	if ((ret >= final_len) || (ret < 0)) {
-		printf("something went wrong creating the payload, ret: %d"
-		       "final_len: %d\n, str: %s\nstrlen: %d\n", ret, final_len, str, strlen(str));
+	if ((ret < 0) || ((uint32_t)ret > final_len)) {
+		printf("something went wrong creating the payload\n");
+#if DEBUG
+		printf("ret: %d final_len: %d\n, str: %s\n strlen: %d\n",
+			ret, final_len, str, strlen(str));
+#endif
 	}
 
 	curl_global_init(CURL_GLOBAL_ALL);
