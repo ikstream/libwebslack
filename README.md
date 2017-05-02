@@ -1,14 +1,16 @@
-# Libwebslack
+# __Libwebslack__
 
 libwebslack provides an interface to send messages to slack
 via the incomming webhooks system from a C program.
 
-### Usage
+#### Depencies
+`libcurl`
+#### Usage
 To send messages you first have to initialize the channel,
 the webhook and username.
 ```
 \\create a struct per team you want send messages
-struct team_info *ti;
+struct team_info *ti = malloc(sizeof(*ti));
 
 \\set webhook url
 if (set_webhook_url(ti, <your webhook here>)) {
@@ -37,6 +39,10 @@ if (set_message(ti, "your very important message")) {
 if (send_message(ti)) {
      \\error handling
 }
+```
+#### Compiler and linker flags
+As libwebslack uses libcurl, the compiler needs to know:
+```$(pkg-config --libs --cflags libcurl)
 ```
 
 #### TODO
