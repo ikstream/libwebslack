@@ -42,8 +42,7 @@ if (send_message(ti)) {
 ```
 #### Compiler and linker flags
 As libwebslack uses libcurl, the compiler needs to know:
-```$(pkg-config --libs --cflags libcurl)
-```
+`$(pkg-config --libs --cflags libcurl)``
 
 #### TODO
 libwebslack uses libcurl by now. This __should__ be changed in the
