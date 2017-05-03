@@ -32,10 +32,45 @@
 #define TEXT 4
 #define ICON_EMOJI 10
 
+static int check_parameters(struct team_info *ti) {
+
+	if ((ti->channel == NULL) || (strlen(ti->channel) == 0)) {
+		printf("[ERROR] channel not set\n");
+		return EXIT_FAILURE;
+	}
+
+	if ((ti->username == NULL) || (strlen(ti->username) == 0)) {
+		printf("[ERROR] username not set\n");
+		return EXIT_FAILURE;
+	}
+
+	if ((ti->text == NULL) ||(strlen(ti->text) == 0)) {
+		printf("[ERROR] text not set\n");
+		return EXIT_FAILURE;
+	}
+
+	if ((ti->emoji == NULL) || (strlen(ti->emoji) == 0)) {
+		snprintf(ti->emoji, (strlen(":ghost:") + 1), ":ghost:");
+	}
+
+	if ((ti->webhook_url == NULL) || (strlen(ti->webhook_url) == 0)) {
+		printf("[ERROR] url not set\n");
+		return EXIT_FAILURE;
+	}
+
+	return EXIT_SUCCESS;
+}
+
 int send_message(struct team_info *ti) {
 	CURL *curl;
 	CURLcode res;
 	int ret;
+
+	if (check_parameters(ti)) {
+		printf("cant send message\n");
+		return EXIT_FAILURE;
+	}
+
 	uint8_t channel_len = sizeof(char) * CHANNEL + strlen(ti->channel);
 	uint8_t user_len = sizeof(char) * USERNAME + strlen(ti->username);
 	uint16_t text_len = sizeof(char) * TEXT + strlen(ti->text);
