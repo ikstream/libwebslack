@@ -63,8 +63,8 @@ static int check_parameters(struct team_info *ti) {
 
 int send_message(struct team_info *ti) {
 	CURL *curl;
-	CURLcode res;
-	int ret = -1;
+	CURLcode res = -1;
+	int ret;
 
 	if (check_parameters(ti)) {
 		printf("cant send message\n");
